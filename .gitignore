@@ -10,3 +10,4 @@ modules.xml
 target/
 vcs.xml
 workspace.xml
+.DS_Store
