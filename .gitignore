@@ -1,0 +1,13 @@
+.idea/*
+.name
+compiler.xml
+copyright/
+encodings.xml
+libraries/
+mazeserver.iml
+misc.xml
+modules.xml
+target/
+pom.xml
+vcs.xml
+workspace.xml
