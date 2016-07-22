@@ -82,7 +82,7 @@ public class Main extends HttpServlet {
 
     public static void main(String[] args) throws Exception {
         Server server = new Server(8080);
-        ServletContextHandler handler = new ServletContextHandler(server, "/maze");
+        ServletContextHandler handler = new ServletContextHandler(server, "/saturnbackend");
         handler.addServlet(Main.class, "/");
         server.start();
     }
