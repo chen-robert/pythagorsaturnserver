@@ -24,8 +24,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 public class Main extends HttpServlet {
 
-    private static final int _MAZE_HEIGHT = 10;
-    private static final int _MAZE_WIDTH = 10;
+    private static final int _MAZE_HEIGHT = 20;
+    private static final int _MAZE_WIDTH = 20;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
