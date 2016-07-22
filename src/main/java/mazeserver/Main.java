@@ -1,7 +1,7 @@
 /**
  * Maze Server
  *
- * Copyright 2016 Finn Bear.  All rights reserved.
+ * Copyright 2016 Finn Bear. All rights reserved.
  */
 
 package mazeserver;
