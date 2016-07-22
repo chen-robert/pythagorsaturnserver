@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd $WORKSPACE
 J="target/mazeserver-1.0-jar-with-dependencies.jar"
 echo pkill -f $J
 pkill -f $J
