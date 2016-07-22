@@ -27,14 +27,14 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-	    <groupId>com.google.code.gson</groupId>
-	    <artifactId>gson</artifactId>
-	    <version>1.7.1</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.7.1</version>
         </dependency>
     </dependencies>
 
     <build>
-	<defaultGoal>clean compile exec:java</defaultGoal>
+        <defaultGoal>clean compile exec:java</defaultGoal>
 
         <plugins>
             <plugin>
@@ -53,6 +53,16 @@
                 </executions>
                 <configuration>
                     <mainClass>mazeserver.Main</mainClass>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- This plugin is needed so that java 1.7 is used instead of java 1.3. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
                 </configuration>
             </plugin>
 

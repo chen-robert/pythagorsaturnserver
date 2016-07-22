@@ -34,7 +34,6 @@ public class Main extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         try {
-            resp.setStatus(HttpStatus.OK_200);
             String p = req.getServletPath();
             assert p != null;
             boolean debugging = p.equals("/");
