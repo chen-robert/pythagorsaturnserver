@@ -23,7 +23,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 
 public class Main extends HttpServlet {
-
+    // This indicates the dimensions of the maze.
     private static final int _MAZE_HEIGHT = 20;
     private static final int _MAZE_WIDTH = 20;
 
