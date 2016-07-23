@@ -1,11 +1,18 @@
+/**
+ * Square.java
+ *
+ * Copyright 2016 Finn Bear.  All rights reserved.
+ */
 package mazeserver;
 
-/**
- * Created by FinnBear on 7/23/16.
- */
+import com.google.gson.annotations.SerializedName;
+
+
 public class Square extends PhysicsObject {
-    float _width;
-    float _height;
+
+    @SerializedName("Width") float _width;
+    @SerializedName("Height") float _height;
+
 
     public Square(Vector2 position, float width, float height, float elasticity, float gravity)
     {

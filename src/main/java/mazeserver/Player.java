@@ -12,20 +12,22 @@ import com.google.gson.annotations.SerializedName;
  * A player in a particular game.
  */
 public class Player {
+    private static final float _ELASTICITY = 0.3f;
+    private static final float _GRAVITY = 0.5f;
+    private static final float _HEIGHT = 0.5f;
+    private static final float _WIDTH = 0.5f;
 
     private transient Game _game;
     @SerializedName("ID") private long _id;
     @SerializedName("User") private User _user;
-    @SerializedName("X") private int _x;
-    @SerializedName("Y") private int _y;
+    @SerializedName("Body") private Square _square;
 
 
     public Player(long id, User user, Game game, int x, int y) {
         _game = game;
         _id = id;
+        _square = new Square(new Vector2(x, y), _WIDTH, _HEIGHT, _ELASTICITY, _GRAVITY);
         _user = user;
-        _x = x;
-        _y = y;
     }
 
 }

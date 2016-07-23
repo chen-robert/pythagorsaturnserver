@@ -1,12 +1,18 @@
+/**
+ * Circle.java
+ *
+ * Copyright 2016 Finn Bear.  All rights reserved.
+ */
 package mazeserver;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.*;
 
-/**
- * Created by FinnBear on 7/23/16.
- */
+
 public class Circle extends PhysicsObject {
-    private float _radius;
+
+    @SerializedName("Radius") private float _radius;
+
 
     public Circle(Vector2 position, float radius, float elasticity, float gravity)
     {

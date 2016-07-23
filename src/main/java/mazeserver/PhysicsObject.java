@@ -1,18 +1,21 @@
+/**
+ * PhysicsObject.java
+ *
+ * Copyright 2016 Finn Bear.  All rights reserved.
+ */
 package mazeserver;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.*;
 
-/**
- * Created by finnb on 7/23/16.
- */
 
 public class PhysicsObject {
 
-    private Vector2 _position;
-    private Vector2 _velocity;
-    private Vector2 _acceleration;
-    private float _elasticity; // 0-1, 0=Absorbs all impacts, 1=No energy absorbed during collision
-    private float _gravity; // 0-1, 0=None, 1=Full
+    @SerializedName("Position") private Vector2 _position;
+    @SerializedName("Velocity") private Vector2 _velocity;
+    @SerializedName("Acceleration") private Vector2 _acceleration;
+    private transient float _elasticity;  // 0-1, 0=Absorbs all impacts, 1=No energy absorbed during collision
+    private transient float _gravity;     // 0-1, 0=None, 1=Full
 
     /*
     public PhysicsObject(Vector2 position, float elasticity, float gravity)
@@ -140,10 +143,10 @@ public class PhysicsObject {
         return _elasticity;
     }
 
-    public void setElasticity(float elasticity)
+    public float setElasticity(float elasticity)
     {
         _elasticity = Math.max(0, Math.min(1, elasticity));;
-        return elasticity;
+        return _elasticity;
     }
 
     public float getGravity()

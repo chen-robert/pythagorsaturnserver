@@ -1,14 +1,21 @@
+/**
+ * Vector2.java
+ *
+ * Copyright 2016 Finn Bear.  All rights reserved.
+ */
 package mazeserver;
 
-/**
- * Created by finnb on 7/23/16.
- */
+import com.google.gson.annotations.SerializedName;
+
+
 public class Vector2 {
-    private float _x;
-    private float _y;
 
     public final static Vector2 ZERO = new Vector2(0, 0);
     public final static Vector2 ONE = new Vector2(1, 1);
+
+    @SerializedName("X") private float _x;
+    @SerializedName("Y") private float _y;
+
 
     public Vector2(float x, float y)
     {
