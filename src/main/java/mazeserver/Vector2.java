@@ -13,8 +13,8 @@ public class Vector2 {
     public final static Vector2 ZERO = new Vector2(0, 0);
     public final static Vector2 ONE = new Vector2(1, 1);
 
-    @SerializedName("X") private float _x;
-    @SerializedName("Y") private float _y;
+    @SerializedName("x") private float _x;
+    @SerializedName("y") private float _y;
 
 
     public Vector2(float x, float y)

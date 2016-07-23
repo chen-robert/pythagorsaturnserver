@@ -10,30 +10,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class Square extends PhysicsObject {
 
-    @SerializedName("Width") float _width;
-    @SerializedName("Height") float _height;
+    @SerializedName("side") float _side;
 
-
-    public Square(Vector2 position, float width, float height, float elasticity, float gravity)
+    public Square(Vector2 position, float side, float elasticity, float gravity)
     {
         super(position, Vector2.ZERO, Vector2.ZERO, elasticity, gravity);
-        _width = width;
-        _height = height;
+        _side = side;
     }
 
-    public Square(Vector2 position, Vector2 velocity, float width, float height, float elasticity, float gravity)
+    public Square(Vector2 position, Vector2 velocity, float side, float elasticity, float gravity)
     {
         super(position, velocity, Vector2.ZERO, elasticity, gravity);
-        _width = width;
-        _height = height;
+        _side = side;
     }
 
-    public Square(Vector2 position, Vector2 velocity, Vector2 acceleration, float width, float height, float elasticity, float gravity)
+    public Square(Vector2 position, Vector2 velocity, Vector2 acceleration, float side, float elasticity, float gravity)
     {
         super(position, velocity, acceleration, elasticity, gravity);
-        _width = width;
-        _height = height;
+        _side = side;
     }
 
-    //To Be Completed
+    public float getSide()
+    {
+        return _side;
+    }
+
+    public float setSide(float side)
+    {
+        _side = Math.max(0, side);
+        return _side;
+    }
 }

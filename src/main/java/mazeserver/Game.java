@@ -14,7 +14,7 @@ public class Game {
 
     @SerializedName("ID") private long _id;
     private transient Maze _maze;
-    @SerializedName("Players") private Map<Long, Player> _playerHash;
+    @SerializedName("players") private Map<Long, Player> _playerHash;
     private transient int _spawnX;
     private transient int _spawnY;
 

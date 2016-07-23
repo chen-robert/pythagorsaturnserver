@@ -11,9 +11,9 @@ import java.util.*;
 
 public class PhysicsObject {
 
-    @SerializedName("Position") private Vector2 _position;
-    @SerializedName("Velocity") private Vector2 _velocity;
-    @SerializedName("Acceleration") private Vector2 _acceleration;
+    @SerializedName("position") private Vector2 _position;
+    @SerializedName("velocity") private Vector2 _velocity;
+    @SerializedName("acceleration") private Vector2 _acceleration;
     private transient float _elasticity;  // 0-1, 0=Absorbs all impacts, 1=No energy absorbed during collision
     private transient float _gravity;     // 0-1, 0=None, 1=Full
 

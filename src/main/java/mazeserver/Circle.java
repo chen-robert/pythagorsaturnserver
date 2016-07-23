@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Circle extends PhysicsObject {
 
-    @SerializedName("Radius") private float _radius;
+    @SerializedName("radius") private float _radius;
 
 
     public Circle(Vector2 position, float radius, float elasticity, float gravity)
