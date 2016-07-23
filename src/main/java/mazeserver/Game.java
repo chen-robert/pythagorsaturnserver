@@ -29,6 +29,12 @@ public class Game {
     }
 
     /**
+     * Change the game state based on the user's action.
+     */
+    public void applyAction(Action action) {
+    }
+
+    /**
      * This method creates a new player with the specified ID.
      */
     public void createPlayer(long playerId, User user) {
