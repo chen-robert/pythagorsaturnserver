@@ -34,12 +34,6 @@ public class Maze {
         _lines = new HashMap();
         _random = new Random(mazeId);
         _width = width;
-
-        //Test
-        Vector2 vec1 = new Vector2(3, 3);
-        Vector2 vec2 = new Vector2(1, 1);
-        System.out.println("Rad: " + vec1.angleToRad(vec2));
-        System.out.println("Deg: " + Math.round(vec1.angleToDeg(vec2)));
     }
 
     public Line addHorizontal(int x, int y, int length) {
