@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 public class Main extends HttpServlet {
 
+    private static final String _USER_ID = "USER_ID";
+
     // For now, all mazes are the same size.
     private static final int _MAZE_HEIGHT = 20;
     private static final int _MAZE_WIDTH = 20;
@@ -34,6 +37,7 @@ public class Main extends HttpServlet {
     // For now, all games are kept in RAM.
     private Map<Long, Game> _gameHash;
     private Map<Long, Game> _sessionHash;
+    private Map<Long, User> _userHash;
 
 
     /**
@@ -49,6 +53,7 @@ public class Main extends HttpServlet {
         assert resp != null;
         assert _gameHash != null;
         assert _sessionHash != null;
+        assert _userHash != null;
         PrintWriter out = resp.getWriter();
 
         try {
@@ -64,6 +69,9 @@ public class Main extends HttpServlet {
                 String[] a = p.split("/");
                 String arg = a.length < 2 ? null : a[1];
                 seed = parseId(arg);
+                if (seed <= 0) {
+                    seed = 13579111315L;
+                }
             }
             Long key = new Long(seed);
             Game game;
@@ -79,6 +87,45 @@ public class Main extends HttpServlet {
                 // For debugging purposes, return the maze in SVG format.
                 printDebug(game.getMaze(), out);
             } else {
+                // Find the user ID in a cookie or generate a new one if it doesn't exist.
+                Long userId = null;
+                Cookie[] cookies = req.getCookies();
+                if (cookies != null) {
+                    for (Cookie c : cookies) {
+                        if (_USER_ID.equals(c.getName())) {
+                            long i = parseId(c.getValue());
+                            if (i != -1L) {
+                                userId = new Long(i);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                User user = null;
+                if (userId != null) {
+                    synchronized (_userHash) {
+                        user = _userHash.get(userId);
+                    }
+                }
+
+                if (user == null) {
+                    assert game != null;
+                    synchronized (_userHash) {
+                        do {
+                            long i = game.getMaze().randomInt(0xFFFFFF);
+                            userId = new Long(i);
+                            user = _userHash.get(userId);
+                        } while (user != null);
+
+                        // Create a new player.
+                        user = new User(userId.longValue());
+                        _userHash.put(userId, user);
+                    }
+                    Cookie c = new Cookie(_USER_ID, userId.toString());
+                    resp.addCookie(c);
+                }
+
                 // Create a unique session ID.
                 assert game != null;
                 Game g;
@@ -90,7 +137,7 @@ public class Main extends HttpServlet {
                     } while (g != null);
 
                     // Create a new player.
-                    game.createPlayer(sessionId);
+                    game.createPlayer(sessionId, user);
                     _sessionHash.put(new Long(sessionId), game);
                 }
 
@@ -102,9 +149,9 @@ public class Main extends HttpServlet {
             }
 
             resp.setStatus(HttpStatus.OK_200);
-        } catch (Throwable ex) {
-            out.println(ex.toString());
-            resp.setStatus(HttpStatus.OK_200);
+        } catch (Throwable e) {
+            out.println(e.toString());
+            resp.setStatus(HttpStatus.INTERNAL_SERVER_ERROR_500);
         }
     }
 
@@ -136,10 +183,10 @@ public class Main extends HttpServlet {
             gson.toJson(game, out);
 
             resp.setStatus(HttpStatus.OK_200);
-        } catch (NoSuchElementException ex) {
+        } catch (NoSuchElementException e) {
             resp.setStatus(HttpStatus.NOT_FOUND_404);
-        } catch (Throwable ex) {
-            out.println(ex.toString());
+        } catch (Throwable e) {
+            out.println(e.toString());
             resp.setStatus(HttpStatus.OK_200);
         }
     }
@@ -148,6 +195,7 @@ public class Main extends HttpServlet {
     public void init() {
         _gameHash = new HashMap();
         _sessionHash = new HashMap();
+        _userHash = new HashMap();
     }
 
     public static void main(String[] args) throws Exception {
@@ -157,13 +205,21 @@ public class Main extends HttpServlet {
         server.start();
     }
 
+    /**
+     * This method returns a positive integer if the ID is parsed successfully,
+     * or else -1 if it is not.
+     */ 
     private static long parseId(String arg) {
         long id;
         try {
             id = Long.parseLong(arg);
-        } catch (NumberFormatException ex) {
-            id = 13579111315L;
+            if (id <= 0L) {
+                throw new NumberFormatException("ID must be greater than zero");
+            }
+        } catch (NumberFormatException e) {
+            id = -1L;
         }
+
         return id;
     }
 

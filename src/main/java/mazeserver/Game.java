@@ -30,13 +30,13 @@ public class Game {
     /**
      * This method creates a new player with the specified ID.
      */
-    public void createPlayer(long playerId) {
+    public void createPlayer(long playerId, User user) {
         Player player = _playerHash.get(playerId);
         if (player != null) {
             throw new IllegalArgumentException("player already exists: " + playerId);
         }
 
-        player = new Player(playerId, this, _spawnX, _spawnY);
+        player = new Player(playerId, user, this, _spawnX, _spawnY);
         _playerHash.put(playerId, player);
     }
 
