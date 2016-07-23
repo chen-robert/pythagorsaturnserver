@@ -66,30 +66,39 @@ public class Main extends HttpServlet {
                 seed = parseId(arg);
             }
             Long key = new Long(seed);
-            Game game = _gameHash.get(key);
-            if (game == null) {
-                game = new Game(seed, _MAZE_HEIGHT, _MAZE_WIDTH);
-                _gameHash.put(key, game);
+            Game game;
+            synchronized (_gameHash) {
+                game = _gameHash.get(key);
+                if (game == null) {
+                    game = new Game(seed, _MAZE_HEIGHT, _MAZE_WIDTH);
+                    _gameHash.put(key, game);
+                }
             }
 
-            // Create a unique session ID.
-            assert game != null;
-            Game g;
-            long sessionId;
-            do {
-                sessionId = game.getMaze().randomInt(0xFFFFFF);
-                g = _sessionHash.get(sessionId);
-            } while (g != null);
-
-            // Create a new player.
-            game.createPlayer(sessionId);
-            _sessionHash.put(new Long(sessionId), game);
-
-            // Return the maze.
             if (debugging) {
+                // For debugging purposes, return the maze in SVG format.
                 printDebug(game.getMaze(), out);
             } else {
-                printGame(game.getMaze(), out);
+                // Create a unique session ID.
+                assert game != null;
+                Game g;
+                long sessionId;
+                synchronized (_sessionHash) {
+                    do {
+                        sessionId = game.getMaze().randomInt(0xFFFFFF);
+                        g = _sessionHash.get(sessionId);
+                    } while (g != null);
+
+                    // Create a new player.
+                    game.createPlayer(sessionId);
+                    _sessionHash.put(new Long(sessionId), game);
+                }
+
+                // Return the new session ID and the maze.
+                Gson gson = new GsonBuilder().create();
+                out.print("{\"SessionID\":" + sessionId + ", \"Maze:\"");
+                gson.toJson(game.getMaze().getContent(), out);
+                out.print("}\n");
             }
 
             resp.setStatus(HttpStatus.OK_200);
@@ -119,8 +128,12 @@ public class Main extends HttpServlet {
             String line;
             BufferedReader input = req.getReader();
             while ((line = input.readLine()) != null) {
-                out.print(parseJson(line));
+                // out.print(parseJson(line));
             }
+
+            // Print the game status.
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(game, out);
 
             resp.setStatus(HttpStatus.OK_200);
         } catch (NoSuchElementException ex) {
@@ -168,6 +181,9 @@ public class Main extends HttpServlet {
         return json;
     }
 
+    /**
+     * For debugging purposes, print the maze in SVG format.
+     */
     private void printDebug(Maze maze, PrintWriter out) {
 
             out.println("<html>\n<title>maze</title>\n<body>");
@@ -207,11 +223,6 @@ public class Main extends HttpServlet {
             out.println("<input type=\"submit\" value=\"Play\" />");
             out.println("</form>");
             out.println("</body>\n</html>");
-    }
-
-    private void printGame(Maze maze, PrintWriter out) {
-        Gson gson = new GsonBuilder().create();
-        gson.toJson(maze.getContent(), out);
     }
 
 }

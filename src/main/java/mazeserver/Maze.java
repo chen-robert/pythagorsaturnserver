@@ -15,7 +15,9 @@ import java.util.Random;
 
 public class Maze {
 
+    @SerializedName("Content") // For serializing Game.
     private Content _content;
+
     private int _height;
     private long _id;
     private Map<Long, Line> _lines;

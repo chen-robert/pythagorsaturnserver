@@ -5,13 +5,16 @@
  */
 package mazeserver;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Game {
 
+    @SerializedName("Maze") // For serializing Game.
     private Maze _maze;
+
     private Map<Long, Player> _playerHash;
     private int _spawnX;
     private int _spawnY;
