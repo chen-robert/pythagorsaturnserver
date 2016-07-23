@@ -8,7 +8,7 @@ package mazeserver;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.BufferedReader;
+import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -155,6 +155,13 @@ public class Main extends HttpServlet {
         }
     }
 
+    /**
+     * POST /98765
+     * { "key":"A" }
+     *
+     * This method reads a user action, applies that action to the game state,
+     * and then returns the game state.
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         assert req != null;
@@ -172,15 +179,14 @@ public class Main extends HttpServlet {
                 throw new NoSuchElementException("cannot find session " + sessionId);
             }
 
-            String line;
-            BufferedReader input = req.getReader();
-            while ((line = input.readLine()) != null) {
-                // out.print(parseJson(line));
-            }
+            Gson gsonIn = new Gson();
+            JsonReader reader = new JsonReader(req.getReader());
+            Action action = gsonIn.fromJson(reader, Action.class);
+            game.applyAction(action);
 
-            // Print the game status.
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(game, out);
+            // Print the new game state.
+            Gson gsonOut = new GsonBuilder().create();
+            gsonOut.toJson(game, out);
 
             resp.setStatus(HttpStatus.OK_200);
         } catch (NoSuchElementException e) {
@@ -223,20 +229,6 @@ public class Main extends HttpServlet {
         }
 
         return id;
-    }
-
-    private static String parseJson(String arg) {
-        String json = null;
-        if (arg != null) {
-            int i = arg.indexOf("{");
-            int j = arg.lastIndexOf("}");
-            if (i >= 0 && j >= 0 && i < j) {
-                json = arg.substring(i, j + 1);
-            } else {
-                json = "";
-            }
-        }
-        return json;
     }
 
     /**
