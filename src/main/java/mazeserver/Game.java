@@ -12,16 +12,17 @@ import java.util.Map;
 
 public class Game {
 
-    @SerializedName("Maze") // For serializing Game.
-    private Maze _maze;
-
-    private Map<Long, Player> _playerHash;
-    private int _spawnX;
-    private int _spawnY;
+    @SerializedName("ID") private long _id;
+    private transient Maze _maze;
+    @SerializedName("Players") private Map<Long, Player> _playerHash;
+    private transient int _spawnX;
+    private transient int _spawnY;
 
 
     public Game(long mazeId, int height, int width) {
         _maze = new Maze(mazeId, height, width);
+
+        _id = _maze.getId();
         _spawnX = _maze.randomInt(width);
         _spawnY = _maze.randomInt(height);
         _playerHash = new HashMap();
