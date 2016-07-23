@@ -35,6 +35,13 @@ public class Rectangle extends PhysicsObject {
         _height = height;
     }
 
+    public Rectangle(Square square)
+    {
+        super(square.getPosition(), square.getVelocity(), square.getAcceleration(), square.getElasticity(), square.getGravity());
+        _width = square.getSide();
+        _height = square.getSide();
+    }
+
     public float getWidth()
     {
         return _width;
