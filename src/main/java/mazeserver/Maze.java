@@ -1,5 +1,5 @@
 /**
- * Maze Server
+ * Maze.java
  *
  * Copyright 2016 Finn Bear.  All rights reserved.
  */
@@ -17,6 +17,7 @@ public class Maze {
 
     private Content _content;
     private int _height;
+    private long _id;
     private Map<Long, Line> _lines;
     private Random _random;
     private int _width;
@@ -27,6 +28,7 @@ public class Maze {
         assert width >= 10;
 
         _height = height;
+        _id = mazeId;
         _lines = new HashMap();
         _random = new Random(mazeId);
         _width = width;
@@ -81,8 +83,8 @@ public class Maze {
         _content = null;
         if (w >= 2 && h >= 2) {
             // Bisect horizontally and vertically at (px, py).
-            int rx = w == 2 ? 1 : 1 + _random.nextInt(w - 1);
-            int ry = h == 2 ? 1 : 1 + _random.nextInt(h - 1);
+            int rx = w == 2 ? 1 : 1 + randomInt(w - 1);
+            int ry = h == 2 ? 1 : 1 + randomInt(h - 1);
             assert rx > 0 && rx < w && ry > 0 && ry < h;
             int px = x + rx;
             int py = y + ry;
@@ -90,17 +92,17 @@ public class Maze {
             Line horizontal = addHorizontal(x, py, w);
 
             // Flip a coin as to whether to cut the horizontal twice or the vertical.
-            boolean cutHorizontal = _random.nextInt(2) == 0;
+            boolean cutHorizontal = randomInt(2) == 0;
             if (cutHorizontal) {
                 // Make the rightmost cut first so the pointer stays valid.
-                horizontal.cut(rx + _random.nextInt(w - rx));
-                horizontal.cut(_random.nextInt(rx));
-                vertical.cut(_random.nextInt(ry));
+                horizontal.cut(rx + randomInt(w - rx));
+                horizontal.cut(randomInt(rx));
+                vertical.cut(randomInt(ry));
             } else {
                 // Make the bottomost cut first so the pointer stays valid.
-                vertical.cut(ry + _random.nextInt(h - ry));
-                vertical.cut(_random.nextInt(ry));
-                horizontal.cut(_random.nextInt(rx));
+                vertical.cut(ry + randomInt(h - ry));
+                vertical.cut(randomInt(ry));
+                horizontal.cut(randomInt(rx));
             }
 
             // Recursively build the sub-mazes.
@@ -109,6 +111,10 @@ public class Maze {
             generate(x, py, rx, h - ry); // Quadrant III " ".
             generate(px, y, w - rx, h - ry); // Quadrant IV " ".
         }
+    }
+
+    public long getId() {
+        return _id;
     }
 
     public Line getLine(int x, int y, int angle) {
@@ -120,6 +126,10 @@ public class Maze {
         assert _lines != null;
 
         _lines.put(key, line);
+    }
+
+    public int randomInt(int limit) {
+        return _random.nextInt(limit);
     }
 
     public void removeLine(Long key) {
