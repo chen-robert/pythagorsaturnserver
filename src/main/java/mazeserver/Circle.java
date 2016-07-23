@@ -13,22 +13,21 @@ public class Circle extends PhysicsObject {
 
     @SerializedName("radius") private float _radius;
 
-
-    public Circle(Vector2 position, float radius, float elasticity, float gravity)
+    public Circle(Vector2 position, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, Vector2.ZERO, Vector2.ZERO, elasticity, gravity);
+        super(position, Vector2.ZERO, Vector2.ZERO, elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
-    public Circle(Vector2 position, Vector2 velocity, float radius, float elasticity, float gravity)
+    public Circle(Vector2 position, Vector2 velocity, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, Vector2.ZERO, elasticity, gravity);
+        super(position, velocity, Vector2.ZERO, elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
-    public Circle(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float elasticity, float gravity)
+    public Circle(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, acceleration, elasticity, gravity);
+        super(position, velocity, acceleration, elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
@@ -44,7 +43,7 @@ public class Circle extends PhysicsObject {
             }
             if (object.getClass().equals(Square.class))
             {
-                PhysicsObject.handleCollisionCircleSquare(this, (Square)object));
+                PhysicsObject.handleCollisionCircleSquare(this, (Square)object);
             }
         }
     }

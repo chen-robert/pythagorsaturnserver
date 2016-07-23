@@ -71,6 +71,13 @@ public class Vector2 {
         return this;
     }
 
+    public Vector2 multiplyByConstant(float constant)
+    {
+        _x *= constant;
+        _y *= constant;
+        return this;
+    }
+
     public float distanceTo(Vector2 vector)
     {
         return (float)Math.sqrt((_x - vector.getX()) * (_x - vector.getX()) + (_y - vector.getY()) * (_y - vector.getY()));

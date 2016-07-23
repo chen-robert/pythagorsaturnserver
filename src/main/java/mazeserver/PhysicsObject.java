@@ -16,6 +16,7 @@ public class PhysicsObject {
     @SerializedName("acceleration") private Vector2 _acceleration;
     private transient float _elasticity;  // 0-1, 0=Absorbs all impacts, 1=No energy absorbed during collision
     private transient float _gravity;     // 0-1, 0=None, 1=Full
+    private transient float _inertialDamper; // 0-1, 0=100% damping, 1=0% damping
 
     /*
     public PhysicsObject(Vector2 position, float elasticity, float gravity)
@@ -36,15 +37,15 @@ public class PhysicsObject {
         _gravity = gravity;
     }
     */
-    public PhysicsObject(Vector2 position, Vector2 velocity, Vector2 acceleration, float elasticity, float gravity)
+    public PhysicsObject(Vector2 position, Vector2 velocity, Vector2 acceleration, float elasticity, float inertialDamper, float gravity)
     {
         _position = position;
         _velocity = velocity;
         _acceleration = acceleration;
         _elasticity = elasticity;
+        _inertialDamper = inertialDamper;
         _gravity = gravity;
     }
-
 
     public void update(List<Object> objectList)
     {
@@ -89,12 +90,9 @@ public class PhysicsObject {
 
     }
 
-    public static
-
-
-
     private void handleAcceleration()
     {
+        _acceleration.multiplyByConstant(_inertialDamper);
         _velocity.add(_acceleration);
     }
 
@@ -108,6 +106,7 @@ public class PhysicsObject {
 
     private void handleVelocity()
     {
+        _velocity.multiplyByConstant(_inertialDamper);
         _position.add(_velocity);
     }
 
@@ -171,6 +170,17 @@ public class PhysicsObject {
     {
         _elasticity = Math.max(0, Math.min(1, elasticity));;
         return _elasticity;
+    }
+
+    public float getInertialDamper()
+    {
+        return _inertialDamper;
+    }
+
+    public float setInertialDamper(float inertialDamper)
+    {
+        _inertialDamper = Math.max(0, Math.min(1, inertialDamper));
+        return _inertialDamper;
     }
 
     public float getGravity()

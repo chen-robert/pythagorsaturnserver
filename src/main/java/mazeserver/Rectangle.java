@@ -14,30 +14,30 @@ public class Rectangle extends PhysicsObject {
     @SerializedName("height") float _height;
 
 
-    public Rectangle(Vector2 position, float width, float height, float elasticity, float gravity)
+    public Rectangle(Vector2 position, float width, float height, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, Vector2.ZERO, Vector2.ZERO, elasticity, gravity);
+        super(position, Vector2.ZERO, Vector2.ZERO, elasticity, inertialDamper, gravity);
         _width = width;
         _height = height;
     }
 
-    public Rectangle(Vector2 position, Vector2 velocity, float width, float height, float elasticity, float gravity)
+    public Rectangle(Vector2 position, Vector2 velocity, float width, float height, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, Vector2.ZERO, elasticity, gravity);
+        super(position, velocity, Vector2.ZERO, elasticity, inertialDamper, gravity);
         _width = width;
         _height = height;
     }
 
-    public Rectangle(Vector2 position, Vector2 velocity, Vector2 acceleration, float width, float height, float elasticity, float gravity)
+    public Rectangle(Vector2 position, Vector2 velocity, Vector2 acceleration, float width, float height, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, acceleration, elasticity, gravity);
+        super(position, velocity, acceleration, elasticity, inertialDamper, gravity);
         _width = width;
         _height = height;
     }
 
     public Rectangle(Square square)
     {
-        super(square.getPosition(), square.getVelocity(), square.getAcceleration(), square.getElasticity(), square.getGravity());
+        super(square.getPosition(), square.getVelocity(), square.getAcceleration(), square.getElasticity(), square.getInertialDamper(), square.getGravity());
         _width = square.getSide();
         _height = square.getSide();
     }
