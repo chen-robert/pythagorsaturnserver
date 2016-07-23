@@ -1,8 +1,11 @@
 package mazeserver;
 
+import java.util.*;
+
 /**
  * Created by finnb on 7/23/16.
  */
+
 public class PhysicsObject {
     private Vector2 _position;
     private Vector2 _velocity;
@@ -10,6 +13,7 @@ public class PhysicsObject {
     private float _elasticity; // 0-1, 0=Absorbs all impacts, 1=No energy absorbed during collision
     private float _gravity; // 0-1, 0=None, 1=Full
 
+    /*
     public PhysicsObject(Vector2 position, float elasticity, float gravity)
     {
         _position = position;
@@ -27,7 +31,7 @@ public class PhysicsObject {
         _elasticity = elasticity;
         _gravity = gravity;
     }
-
+    */
     public PhysicsObject(Vector2 position, Vector2 velocity, Vector2 acceleration, float elasticity, float gravity)
     {
         _position = position;
@@ -37,17 +41,28 @@ public class PhysicsObject {
         _gravity = gravity;
     }
 
-    public void update()
+
+    public void update(List<Object> objectList)
     {
         handleAcceleration();
         handleGravity();
         handleVelocity();
-        handleCollisions();
+        handleCollisions(objectList);
     }
 
-    public void handleCollisions()
+    public void handleCollisions(List<Object> objectList)
     {
         System.out.println("Override PhysicsObject.handleCollisions() to use a type specific collision handler.");
+    }
+
+    public static void handleCollisionCircleCircle(Circle circle1, Circle circle2)
+    {
+
+    }
+
+    public static void handleCollisionCircleSquare(Circle circle, Square square)
+    {
+
     }
 
     private void handleAcceleration()
@@ -127,6 +142,7 @@ public class PhysicsObject {
     public float setElasticity(float elasticity)
     {
         _elasticity = Math.max(0, Math.min(1, elasticity));;
+        return elasticity;
     }
 
     public float getGravity()
