@@ -44,7 +44,7 @@ public class Circle extends PhysicsObject {
             }
             if (object.getClass().equals(Square.class))
             {
-                PhysicsObject.handleCollisionCircleSquare(this, (Square)object);
+                PhysicsObject.handleCollisionCircleSquare(this, (Square)object));
             }
         }
     }

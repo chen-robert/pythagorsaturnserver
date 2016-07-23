@@ -64,10 +64,34 @@ public class PhysicsObject {
 
     }
 
+    public static void handleCollisionSquareSquare(Square square1, Square square2)
+    {
+
+    }
+
+    public static void handleCollisionRectangleRectangle(Rectangle rectangle1, Rectangle rectangle2)
+    {
+
+    }
+
     public static void handleCollisionCircleSquare(Circle circle, Square square)
     {
 
     }
+
+    public static void handleCollisionCircleRectangle(Circle circle, Rectangle rectangle)
+    {
+
+    }
+
+    public static void handleCollisionSquareRectangle(Square square, Rectangle rectangle)
+    {
+
+    }
+
+    public static
+
+
 
     private void handleAcceleration()
     {

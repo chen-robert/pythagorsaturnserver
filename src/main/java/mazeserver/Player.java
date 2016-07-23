@@ -15,7 +15,7 @@ public class Player {
     private static final float _ELASTICITY = 0.3f;
     private static final float _GRAVITY = 0.5f;
     private static final float _HEIGHT = 0.5f;
-    private static final float _WIDTH = 0.5f;
+    private static final float _WIDTH = 0.3f;
 
     private transient Game _game;
     @SerializedName("ID") private long _id;
