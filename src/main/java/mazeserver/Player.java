@@ -5,17 +5,19 @@
  */
 package mazeserver;
 
+import com.google.gson.annotations.SerializedName;
+
 
 /**
  * A player in a particular game.
  */
 public class Player {
 
-    private Game _game;
-    private long _id;
-    private User _user;
-    private int _x;
-    private int _y;
+    private transient Game _game;
+    @SerializedName("ID") private long _id;
+    @SerializedName("User") private User _user;
+    @SerializedName("X") private int _x;
+    @SerializedName("Y") private int _y;
 
 
     public Player(long id, User user, Game game, int x, int y) {

@@ -188,6 +188,8 @@ public class Main extends HttpServlet {
         } catch (Throwable e) {
             out.println(e.toString());
             resp.setStatus(HttpStatus.OK_200);
+        } finally {
+            out.close();
         }
     }
 

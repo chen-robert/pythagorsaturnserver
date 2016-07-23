@@ -7,6 +7,7 @@ import java.util.*;
  */
 
 public class PhysicsObject {
+
     private Vector2 _position;
     private Vector2 _velocity;
     private Vector2 _acceleration;
@@ -139,7 +140,7 @@ public class PhysicsObject {
         return _elasticity;
     }
 
-    public float setElasticity(float elasticity)
+    public void setElasticity(float elasticity)
     {
         _elasticity = Math.max(0, Math.min(1, elasticity));;
         return elasticity;

@@ -15,9 +15,8 @@ import java.util.Random;
 
 public class Maze {
 
-    @SerializedName("Content") // For serializing Game.
+    // Only _content is serialized, not Maze, so @SerializedName isn't needed below.
     private Content _content;
-
     private int _height;
     private long _id;
     private Map<Long, Line> _lines;
