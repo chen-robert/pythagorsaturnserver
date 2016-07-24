@@ -47,7 +47,7 @@ public class PhysicsObject {
         _gravity = gravity;
     }
 
-    public void update(List<Object> objectList)
+    public void update(List<Circle> objectList)
     {
         handleAcceleration();
         handleGravity();
@@ -55,14 +55,19 @@ public class PhysicsObject {
         handleCollisions(objectList);
     }
 
-    public void handleCollisions(List<Object> objectList)
+    public void handleCollisions(List<Circle> objectList)
     {
         System.out.println("Override PhysicsObject.handleCollisions() to use a type specific collision handler.");
     }
 
     public static void handleCollisionCircleCircle(Circle circle1, Circle circle2)
     {
-
+        if (circle1.getPosition().distanceTo2(circle2.getPosition()) < (circle1.getRadius() + circle2.getRadius()) * (circle1.getRadius() + circle2.getRadius()))
+        {
+            float angle = circle1.getPosition().angleToRad(circle2.getPosition());
+            circle1.changeAcceleration(-1 * (float)Math.cos(angle), -1 * (float)Math.sin(angle));
+            circle2.changeAcceleration((float)Math.cos(angle), (float)Math.sin(angle));
+        }
     }
 
     public static void handleCollisionSquareSquare(Square square1, Square square2)
@@ -92,8 +97,8 @@ public class PhysicsObject {
 
     private void handleAcceleration()
     {
-        _acceleration.multiplyByConstant(_inertialDamper);
         _velocity.add(_acceleration);
+        _acceleration.multiplyByConstant(_inertialDamper);
     }
 
     private void handleGravity()
@@ -106,8 +111,8 @@ public class PhysicsObject {
 
     private void handleVelocity()
     {
-        _velocity.multiplyByConstant(_inertialDamper);
         _position.add(_velocity);
+        _velocity.multiplyByConstant(_inertialDamper);
     }
 
     public Vector2 getPosition()
@@ -121,9 +126,21 @@ public class PhysicsObject {
         return _position;
     }
 
+    public Vector2 setPosition(float x, float y)
+    {
+        _position = new Vector2(x, y);
+        return _position;
+    }
+
     public Vector2 changePosition(Vector2 position)
     {
         _position.add(position);
+        return _position;
+    }
+
+    public Vector2 changePosition(float x, float y)
+    {
+        _position.add(x, y);
         return _position;
     }
 
@@ -138,9 +155,21 @@ public class PhysicsObject {
         return _velocity;
     }
 
+    public Vector2 setVelocity(float x, float y)
+    {
+        _velocity = new Vector2(x, y);
+        return _velocity;
+    }
+
     public Vector2 changeVelocity(Vector2 velocity)
     {
         _velocity.add(velocity);
+        return _velocity;
+    }
+
+    public Vector2 changeVelocity(float x, float y)
+    {
+        _velocity.add(x, y);
         return _velocity;
     }
 
@@ -155,9 +184,21 @@ public class PhysicsObject {
         return _acceleration;
     }
 
+    public Vector2 setAcceleration(float x, float y)
+    {
+        _acceleration = new Vector2(x, y);
+        return _acceleration;
+    }
+
     public Vector2 changeAcceleration(Vector2 acceleration)
     {
         _acceleration.add(acceleration);
+        return _acceleration;
+    }
+
+    public Vector2 changeAcceleration(float x, float y)
+    {
+        _acceleration.add(x, y);
         return _acceleration;
     }
 

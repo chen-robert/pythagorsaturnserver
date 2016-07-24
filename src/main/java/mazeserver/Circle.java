@@ -32,7 +32,7 @@ public class Circle extends PhysicsObject {
     }
 
     @Override
-    public void handleCollisions(List<Object> objectList)
+    public void handleCollisions(List<Circle> objectList)
     {
         for (int i = 0; i < objectList.size(); i += 1)
         {

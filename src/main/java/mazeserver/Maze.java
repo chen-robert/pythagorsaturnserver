@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List; //Testing
+import java.util.ArrayList; //Testing
 import java.util.Random;
 
 
@@ -33,6 +35,27 @@ public class Maze {
         _lines = new HashMap();
         _random = new Random(mazeId);
         _width = width;
+
+        //Debug
+        /*
+        Circle circle1 = new Circle(new Vector2(0, 0), 3, 0.5f, 0.9f, 0);
+        Circle circle2 = new Circle(new Vector2(1,1), 3, 0.5f, 0.9f, 0);
+        List<Circle> objectList = new ArrayList<Circle>(2);
+        objectList.add(0, circle1);
+        objectList.add(1, circle2);
+        System.out.println("Circle1: x=" + Math.round((objectList.get(0).getPosition().getX())) + " y=" + Math.round(objectList.get(0).getPosition().getY()));
+        System.out.println("Circle2: x=" + Math.round((objectList.get(1).getPosition().getY())) + " y=" + Math.round(objectList.get(1).getPosition().getY()));
+        objectList.get(0).update(objectList);
+        objectList.get(1).update(objectList);
+        System.out.println("Circle1: x=" + Math.round((objectList.get(0).getPosition().getX())) + " y=" + Math.round(objectList.get(0).getPosition().getY()));
+        System.out.println("Circle2: x=" + Math.round((objectList.get(1).getPosition().getY())) + " y=" + Math.round(objectList.get(1).getPosition().getY()));
+        objectList.get(0).update(objectList);
+        objectList.get(1).update(objectList);
+        System.out.println("Circle1: x=" + Math.round((objectList.get(0).getPosition().getX())) + " y=" + Math.round(objectList.get(0).getPosition().getY()));
+        System.out.println("Circle2: x=" + Math.round((objectList.get(1).getPosition().getY())) + " y=" + Math.round(objectList.get(1).getPosition().getY()));
+        objectList.get(0).update(objectList);
+        objectList.get(1).update(objectList);
+        */
     }
 
     public Line addHorizontal(int x, int y, int length) {

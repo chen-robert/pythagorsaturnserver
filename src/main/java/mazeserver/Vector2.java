@@ -64,10 +64,24 @@ public class Vector2 {
         return this;
     }
 
+    public Vector2 add(float x, float y)
+    {
+        _x += x;
+        _y += y;
+        return this;
+    }
+
     public Vector2 subtract(Vector2 vector)
     {
         _x -= vector.getX();
         _y -= vector.getY();
+        return this;
+    }
+
+    public Vector2 subtract(float x, float y)
+    {
+        _x -= x;
+        _y -= y;
         return this;
     }
 
@@ -83,9 +97,19 @@ public class Vector2 {
         return (float)Math.sqrt((_x - vector.getX()) * (_x - vector.getX()) + (_y - vector.getY()) * (_y - vector.getY()));
     }
 
+    public float distanceTo2(Vector2 vector)
+    {
+        return (float)(_x - vector.getX()) * (_x - vector.getX()) + (_y - vector.getY()) * (_y - vector.getY());
+    }
+
     public float distance(Vector2 vector1, Vector2 vector2)
     {
         return (float)Math.sqrt((vector1.getX() - vector2.getX()) * (vector1.getX() - vector2.getX()) + (vector1.getY() - vector2.getY()) * (vector1.getY() - vector2.getY()));
+    }
+
+    public float distance2(Vector2 vector1, Vector2 vector2)
+    {
+        return (float)(vector1.getX() - vector2.getX()) * (vector1.getX() - vector2.getX()) + (vector1.getY() - vector2.getY()) * (vector1.getY() - vector2.getY());
     }
 
     public float angleToRad(Vector2 vector)
