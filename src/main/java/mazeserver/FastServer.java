@@ -42,6 +42,7 @@ public class FastServer {
 
         private Game _game;
         private Session _session;
+        private long _sessionId;
 
 
         // This method is called when the connection is closed.
@@ -66,9 +67,11 @@ public class FastServer {
         @OnWebSocketMessage
         public void handleMessage(String message) {
             assert _game != null;
+            assert _sessionId != 0L;
+
             JsonReader reader = new JsonReader(new StringReader(message));
             Action action = new Gson().fromJson(reader, Action.class);
-            _game.applyAction(action);
+            _game.applyAction(_sessionId, action);
 
             // TBD: When appropriate, call stop() method.
 
