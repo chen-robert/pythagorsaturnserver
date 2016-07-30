@@ -143,7 +143,7 @@ public class Main extends HttpServlet {
 
                 // Return the new session ID and the maze.
                 Gson gson = new GsonBuilder().create();
-                out.print("{\"SessionID\":" + sessionId + ", \"Maze:\"");
+                out.print("{\"SessionID\":" + sessionId + ", \"Maze\":");
                 gson.toJson(game.getMaze().getContent(), out);
                 out.print("}\n");
             }
