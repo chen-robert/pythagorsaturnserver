@@ -18,4 +18,8 @@ public class Action {
     public Action() {
     }
 
+    public String getKey()
+    {
+        return _key;
+    }
 }

@@ -31,7 +31,25 @@ public class Game {
     /**
      * Change the game state based on the user's action.
      */
-    public void applyAction(Action action) {
+    public void applyAction(long playerId, Action action) {
+        Player player = _playerHash.get(new Long(playerId));
+        switch (action.getKey())
+        {
+            case "U":
+                player.getRectangle().changeAcceleration(0, 1);
+                break;
+            case "D":
+                player.getRectangle().changeAcceleration(0, -1);
+                break;
+            case "R":
+                player.getRectangle().changeAcceleration(1, 0);
+                break;
+            case "L":
+                player.getRectangle().changeAcceleration(-1, 0);
+                break;
+            default:
+                System.out.println("Could not process action, key='" + action.getKey() + "'");
+        }
     }
 
     /**

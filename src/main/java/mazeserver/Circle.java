@@ -13,21 +13,21 @@ public class Circle extends PhysicsObject {
 
     @SerializedName("radius") private float _radius;
 
-    public Circle(Vector2 position, float radius, float elasticity, float inertialDamper, float gravity)
+    public Circle(String id, Vector2 position, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, Vector2.ZERO, Vector2.ZERO, elasticity, inertialDamper, gravity);
+        super(id, position, Vector2.ZERO(), Vector2.ZERO(), elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
-    public Circle(Vector2 position, Vector2 velocity, float radius, float elasticity, float inertialDamper, float gravity)
+    public Circle(String id, Vector2 position, Vector2 velocity, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, Vector2.ZERO, elasticity, inertialDamper, gravity);
+        super(id, position, velocity, Vector2.ZERO(), elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
-    public Circle(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float elasticity, float inertialDamper, float gravity)
+    public Circle(String id, Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float elasticity, float inertialDamper, float gravity)
     {
-        super(position, velocity, acceleration, elasticity, inertialDamper, gravity);
+        super(id, position, velocity, acceleration, elasticity, inertialDamper, gravity);
         _radius = radius;
     }
 
@@ -37,7 +37,7 @@ public class Circle extends PhysicsObject {
         for (int i = 0; i < objectList.size(); i += 1)
         {
             Object object = objectList.get(i);
-            if (object.getClass().equals(Circle.class))
+            if (object.getClass().equals(Circle.class) && object != this)
             {
                 PhysicsObject.handleCollisionCircleCircle(this, (Circle)object);
             }

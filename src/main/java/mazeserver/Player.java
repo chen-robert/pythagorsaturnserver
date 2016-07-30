@@ -21,14 +21,20 @@ public class Player {
     private transient Game _game;
     @SerializedName("ID") private long _id;
     @SerializedName("user") private User _user;
-    @SerializedName("body") private Rectangle _square;
+    @SerializedName("rectangle") private Rectangle _rectangle;
 
 
     public Player(long id, User user, Game game, int x, int y) {
         _game = game;
         _id = id;
-        _square = new Rectangle(new Vector2(x, y), _WIDTH, _HEIGHT, _ELASTICITY, _INERTIALDAMPER, _GRAVITY);
+
+        //Note: id and PhysicsObject.id mean two different things
+        _rectangle = new Rectangle(new Long(_id).toString(), new Vector2(x, y), _WIDTH, _HEIGHT, _ELASTICITY, _INERTIALDAMPER, _GRAVITY);
         _user = user;
     }
 
+    public Rectangle getRectangle()
+    {
+        return _rectangle;
+    }
 }
