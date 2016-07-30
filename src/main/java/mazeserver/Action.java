@@ -13,9 +13,13 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Action {
 
-    @SerializedName("key") private String _key;
+    @SerializedName("keys") private String[] _keys;
 
     public Action() {
     }
 
+    public String[] getKeys()
+    {
+        return _keys;
+    }
 }

@@ -6,6 +6,8 @@
 package mazeserver;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +33,30 @@ public class Game {
     /**
      * Change the game state based on the user's action.
      */
-    public void applyAction(Action action) {
+    public void applyAction(long playerId, Action action) {
+        Player player = _playerHash.get(new Long(playerId));
+        for (String k : action.getKeys()) {
+            switch (k) {
+                case "U":
+                    player.getRectangle().changeAcceleration(0, 1);
+                    break;
+                case "D":
+                    player.getRectangle().changeAcceleration(0, -1);
+                    break;
+                case "R":
+                    player.getRectangle().changeAcceleration(1, 0);
+                    break;
+                case "L":
+                    player.getRectangle().changeAcceleration(-1, 0);
+                    break;
+                default:
+                    System.out.println("Could not process action, key='" + k + "'");
+            }
+        }
+        for (Player p : _playerHash.values())
+        {
+            p.getRectangle().update(new ArrayList<Circle>());
+        }
     }
 
     /**

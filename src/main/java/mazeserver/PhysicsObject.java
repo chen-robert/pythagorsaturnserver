@@ -11,6 +11,7 @@ import java.util.*;
 
 public class PhysicsObject {
 
+    private transient String _id;
     @SerializedName("position") private Vector2 _position;
     @SerializedName("velocity") private Vector2 _velocity;
     @SerializedName("acceleration") private Vector2 _acceleration;
@@ -37,8 +38,9 @@ public class PhysicsObject {
         _gravity = gravity;
     }
     */
-    public PhysicsObject(Vector2 position, Vector2 velocity, Vector2 acceleration, float elasticity, float inertialDamper, float gravity)
+    public PhysicsObject(String id, Vector2 position, Vector2 velocity, Vector2 acceleration, float elasticity, float inertialDamper, float gravity)
     {
+        _id = id;
         _position = position;
         _velocity = velocity;
         _acceleration = acceleration;
@@ -49,10 +51,10 @@ public class PhysicsObject {
 
     public void update(List<Circle> objectList)
     {
+        handleCollisions(objectList);
         handleAcceleration();
         handleGravity();
         handleVelocity();
-        handleCollisions(objectList);
     }
 
     public void handleCollisions(List<Circle> objectList)
@@ -233,5 +235,30 @@ public class PhysicsObject {
     {
         _gravity = Math.max(0, Math.min(1, gravity));;
         return _gravity;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("id=");
+        buffer.append(_id);
+        buffer.append(" positionX=");
+        buffer.append(_position.getX());
+        buffer.append(" positionY=");
+        buffer.append(_position.getY());
+        buffer.append(" velocityX=");
+        buffer.append(_velocity.getX());
+        buffer.append(" velocityY=");
+        buffer.append(_velocity.getY());
+        buffer.append(" accelerationX=");
+        buffer.append(_acceleration.getX());
+        buffer.append(" accelerationY=");
+        buffer.append(_acceleration.getY());
+        return buffer.toString();
     }
 }

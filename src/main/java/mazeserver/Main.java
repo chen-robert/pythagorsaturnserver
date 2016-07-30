@@ -12,10 +12,7 @@ import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -182,7 +179,7 @@ public class Main extends HttpServlet {
             Gson gsonIn = new Gson();
             JsonReader reader = new JsonReader(req.getReader());
             Action action = gsonIn.fromJson(reader, Action.class);
-            game.applyAction(action);
+            game.applyAction(sessionId, action);
 
             // Print the new game state.
             Gson gsonOut = new GsonBuilder().create();
@@ -207,10 +204,17 @@ public class Main extends HttpServlet {
     }
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(8080);
-        ServletContextHandler handler = new ServletContextHandler(server, "/saturnbackend");
-        handler.addServlet(Main.class, "/");
-        server.start();
+        if (args.length > 0 && "-d".equals(args[0])) {
+            System.out.println("Entered DEBUG mode.");
+            Debug.runTests();
+            System.out.println("Press any key to continue...");
+            System.in.read();
+        } else {
+            Server server = new Server(8080);
+            ServletContextHandler handler = new ServletContextHandler(server, "/saturnbackend");
+            handler.addServlet(Main.class, "/");
+            server.start();
+        }
     }
 
     /**
