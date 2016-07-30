@@ -11,7 +11,7 @@
     <name>Saturn Maze Server</name>
 
     <properties>
-        <jettyVersion>7.2.0.v20101020</jettyVersion>
+        <jettyVersion>9.2.5.v20141112</jettyVersion>
     </properties>
 
     <dependencies>
@@ -25,6 +25,11 @@
             <artifactId>jetty-servlet</artifactId>
             <version>${jettyVersion}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-server</artifactId>
+            <version>${jettyVersion}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
