@@ -48,7 +48,7 @@ public class Maze {
     public Line addLine(int x, int y, int angle, int length) {
         assert angle >= 0;
         assert length >= 0;
-        assert y >= 0;
+        assert x >= 0;
         assert y >= 0;
 
         Line line = getLine(x, y, angle);
@@ -76,7 +76,7 @@ public class Maze {
     }
 
     public void generate() {
-        generate(-_width / 2, -_height / 2, _width, _height);
+        generate(-_width / 2, -_height / 2, _width, _height); 
     }
 
     public void generate(int x, int y, int w, int h) {
